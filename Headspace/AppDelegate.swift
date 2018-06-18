@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import ServiceManagement
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -51,8 +52,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    func toggleLoginItem(shouldStartAtLogin: Bool) {
+        let appId = "nl.qscope.HeadspaceHelper" as CFString
+        if (SMLoginItemSetEnabled(appId, shouldStartAtLogin)) {
+            if (shouldStartAtLogin) {
+                NSLog("Successfully add login item.")
+            } else {
+                NSLog("Successfully remove login item.")
+            }
+        } else {
+            NSLog("Failed to add login item.")
+        }
+    }
+    
     @IBAction func launchAtLoginClicked(_ sender: NSMenuItem) {
-        setStartAtLogin(shouldStartAtLogin: !getStartAtLogin())
+        let currentState = getStartAtLogin()
+        setStartAtLogin(shouldStartAtLogin: !currentState)
+        toggleLoginItem(shouldStartAtLogin: !currentState)
     }
     
     @IBAction func isTemplateClicked(_ sender: NSMenuItem) {
