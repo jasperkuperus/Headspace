@@ -24,55 +24,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func getStartAtLogin() -> Bool {
         return userDefaults.bool(forKey: "startAtLogin")
     }
-    
-    func setStartAtLogin(startAtLogin: Bool) {
-        userDefaults.set(startAtLogin, forKey: "startAtLogin")
-    }
 
     func getIsTemplate() -> Bool {
         return userDefaults.bool(forKey: "isTemplate")
     }
-    
-    func setIsTemplate(isTemplate: Bool) {
-        userDefaults.set(isTemplate, forKey: "isTemplate")
-    }
 
-    func setLaunchAtLoginCheck(isChecked: Bool) {
-        if (isChecked) {
+    func setStartAtLogin(shouldStartAtLogin: Bool) {
+        userDefaults.set(shouldStartAtLogin, forKey: "startAtLogin")
+
+        if (shouldStartAtLogin) {
             launchAtLogin.state = NSControl.StateValue.on
         } else {
             launchAtLogin.state = NSControl.StateValue.off
         }
     }
     
-    func setIsTemplateCheck(isChecked: Bool) {
-        if (isChecked) {
+    func setIsTemplate(isTemplateValue: Bool) {
+        userDefaults.set(isTemplateValue, forKey: "isTemplate")
+
+        if (isTemplateValue) {
             isTemplate.state = NSControl.StateValue.on
+            icon?.isTemplate = true
         } else {
             isTemplate.state = NSControl.StateValue.off
+            icon?.isTemplate = false
         }
     }
 
     @IBAction func launchAtLoginClicked(_ sender: NSMenuItem) {
-        if (getStartAtLogin()) {
-            setStartAtLogin(startAtLogin: false)
-            setLaunchAtLoginCheck(isChecked: false)
-        } else {
-            setStartAtLogin(startAtLogin: true)
-            setLaunchAtLoginCheck(isChecked: true)
-        }
+        setStartAtLogin(shouldStartAtLogin: !getStartAtLogin())
     }
     
     @IBAction func isTemplateClicked(_ sender: NSMenuItem) {
-        if (getIsTemplate()) {
-            setIsTemplate(isTemplate: false)
-            setIsTemplateCheck(isChecked: false)
-            icon?.isTemplate = false
-        } else {
-            setIsTemplate(isTemplate: true)
-            setIsTemplateCheck(isChecked: true)
-            icon?.isTemplate = true
-        }
+        setIsTemplate(isTemplateValue: !getIsTemplate())
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {
@@ -84,14 +68,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.image = icon
         statusItem.menu = statusMenu
 
-        if (getIsTemplate()) {
-            icon?.isTemplate = true
-            setIsTemplateCheck(isChecked: true)
-        }
-        
-        if (getStartAtLogin()) {
-            setLaunchAtLoginCheck(isChecked: true)
-        }
+        setIsTemplate(isTemplateValue: getIsTemplate())
+        setStartAtLogin(shouldStartAtLogin: getStartAtLogin())
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
