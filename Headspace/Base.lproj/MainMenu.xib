@@ -10,15 +10,29 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Headspace" customModuleProvider="target">
             <connections>
+                <outlet property="isTemplate" destination="HNn-hH-H6R" id="G9j-3m-QvG"/>
+                <outlet property="launchAtLogin" destination="83E-sK-XPW" id="ChS-2s-V1u"/>
                 <outlet property="statusMenu" destination="yrJ-Qd-Y5l" id="DnN-wu-7Fd"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu id="yrJ-Qd-Y5l">
             <items>
+                <menuItem title="Launch at login" id="83E-sK-XPW">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="launchAtLoginClicked:" target="Voe-Tx-rLC" id="YYP-fk-Yrr"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Use black and white icon" id="HNn-hH-H6R">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="isTemplateClicked:" target="Voe-Tx-rLC" id="N2V-kb-Krt"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Quit" id="Guq-Tb-Xxw">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -26,6 +40,7 @@
                     </connections>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="138.5" y="185.5"/>
         </menu>
     </objects>
 </document>
